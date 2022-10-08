@@ -1,4 +1,5 @@
 #!/Users/sorakojima/proj/gestureInterface/.venv/bin/python
+import inspect
 import time
 
 import cv2
@@ -12,7 +13,7 @@ cap = cv2.VideoCapture(0)
 
 with mp_hands.Hands(
     model_complexity=0,
-    max_num_hands=4,
+    max_num_hands=2,
     min_detection_confidence=0.5,
     min_tracking_confidence=0.5) as hands:
     while cap.isOpened():
@@ -36,12 +37,16 @@ with mp_hands.Hands(
                 mp_drawing.draw_landmarks(image,
                                           hand_landmarks,
                                           mp_hands.HAND_CONNECTIONS,
+                                          mp_drawing_styles.get_default_hand_landmarks_style(),
                                           mp_drawing_styles.get_default_hand_connections_style()
                                           )
-        # 人差し指の座標を表示
-        #results.multi_hand_landmarks[0].landmark[8]
-        # 動画上に文字を書き込み
-        # cv2.putText(image, f"{finger1}", (1000, 30), cv2.FONT_HERSHEY_PLAIN, 2, (0, 255, 0), 2, cv2.LINE_AA)
+            # 人差し指の座標を表示
+            finger1 = results.multi_hand_world_landmarks[0].landmark[8]
+            print(results.multi_hand_world_landmarks[0])
+            # 動画上に文字を書き込み
+            cv2.putText(image, f"x:{finger1.x:.3f}", (1000, 30), cv2.FONT_HERSHEY_PLAIN, 2, (0, 255, 0), 2, cv2.LINE_AA)
+            cv2.putText(image, f"y:{finger1.y:.3f}", (1000, 60), cv2.FONT_HERSHEY_PLAIN, 2, (0, 255, 0), 2, cv2.LINE_AA)
+            cv2.putText(image, f"z:{finger1.z:.3f}", (1000, 90), cv2.FONT_HERSHEY_PLAIN, 2, (0, 255, 0), 2, cv2.LINE_AA)
         # Flip the image horizontally for a selfie-view display.
         cv2.imshow('MediaPipe Hands', cv2.flip(image, 1))
         if cv2.waitKey(5) & 0xFF == 27:
