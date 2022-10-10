@@ -2,4 +2,4 @@
 .python-version
 mediapipe-silicon
 examples
-*.cpython*
+__pycache__
