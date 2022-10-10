@@ -15,7 +15,7 @@ class gestureDetector:
         else:
             print("ちかくなーい")
     
-    def grub(self, min_dist):
+    def grub(self, dist):
         thumb_tip = self.hand_node[4]
         index_finger_mcp = self.hand_node[5]
         middle_finger_pip = self.hand_node[10]
@@ -36,7 +36,7 @@ class gestureDetector:
             (thumb_tip.y-ring_finger_pip.y)**2 +
             (thumb_tip.z-ring_finger_pip.z)**2
         )
-        if (dist4_10 or dist4_5 or dist4_14) <= min_dist:
+        if (dist4_10 or dist4_5 or dist4_14) <= dist:
             return True
         else:
             return False
