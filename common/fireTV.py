@@ -1,8 +1,8 @@
-from gesture import *
 
-class command:
-    def __init__(self, results):
+class FTVController:
+    def __init__(self):
         pass
+
 
 if __name__=="__main__":
     pass
