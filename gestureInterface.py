@@ -4,16 +4,17 @@ import time
 
 import cv2
 import mediapipe as mp
+from common import orderFT
+
 mp_drawing = mp.solutions.drawing_utils
 mp_drawing_styles = mp.solutions.drawing_styles
+mp_holistic = mp.solutions.holistic
 mp_hands = mp.solutions.hands
 
 # For webcam input:
 cap = cv2.VideoCapture(0)
 
-with mp_hands.Hands(
-    model_complexity=0,
-    max_num_hands=2,
+with mp_holistic.Holistic(
     min_detection_confidence=0.5,
     min_tracking_confidence=0.5) as hands:
     while cap.isOpened():
@@ -32,6 +33,22 @@ with mp_hands.Hands(
         image.flags.writeable = True
         image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
         
+        # draw hands
+        if results.left_hand_landmarks:
+            mp_drawing.draw_landmarks(image,
+                                      results.left_hand_landmarks,
+                                      mp_holistic.HAND_CONNECTIONS,
+                                      mp_drawing_styles.get_default_hand_landmarks_style(),
+                                      mp_drawing_styles.get_default_hand_connections_style())
+        if results.right_hand_landmarks:
+            mp_drawing.draw_landmarks(image,
+                                      results.right_hand_landmarks,
+                                      mp_holistic.HAND_CONNECTIONS,
+                                      mp_drawing_styles.get_default_hand_landmarks_style(),
+                                      mp_drawing_styles.get_default_hand_connections_style())
+            
+        
+        """
         if results.multi_hand_landmarks:
             for hand_landmarks in results.multi_hand_landmarks:
                 mp_drawing.draw_landmarks(image,
@@ -47,6 +64,8 @@ with mp_hands.Hands(
             cv2.putText(image, f"x:{finger1.x:.3f}", (1000, 30), cv2.FONT_HERSHEY_PLAIN, 2, (0, 255, 0), 2, cv2.LINE_AA)
             cv2.putText(image, f"y:{finger1.y:.3f}", (1000, 60), cv2.FONT_HERSHEY_PLAIN, 2, (0, 255, 0), 2, cv2.LINE_AA)
             cv2.putText(image, f"z:{finger1.z:.3f}", (1000, 90), cv2.FONT_HERSHEY_PLAIN, 2, (0, 255, 0), 2, cv2.LINE_AA)
+        """
+        
         # Flip the image horizontally for a selfie-view display.
         cv2.imshow('MediaPipe Hands', cv2.flip(image, 1))
         if cv2.waitKey(5) & 0xFF == 27:
