@@ -4,7 +4,7 @@ import time
 
 import cv2
 import mediapipe as mp
-from common import orderFT
+from common.fireTV import *
 
 mp_drawing = mp.solutions.drawing_utils
 mp_drawing_styles = mp.solutions.drawing_styles
@@ -46,8 +46,6 @@ with mp_holistic.Holistic(
                                       mp_holistic.HAND_CONNECTIONS,
                                       mp_drawing_styles.get_default_hand_landmarks_style(),
                                       mp_drawing_styles.get_default_hand_connections_style())
-            
-        
         """
         if results.multi_hand_landmarks:
             for hand_landmarks in results.multi_hand_landmarks:
