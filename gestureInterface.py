@@ -1,4 +1,3 @@
-#!/Users/sorakojima/proj/gestureInterface/.venv/bin/python
 from numpy import floor
 import time
 
