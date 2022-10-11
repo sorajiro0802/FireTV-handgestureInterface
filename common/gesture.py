@@ -11,9 +11,9 @@ class gestureDetector:
         
     def detect(self):
         if self.grub(0.1):
-            print("近い！！！")
+            print("ぎゅっっ")
         else:
-            print("ちかくなーい")
+            print("っっぱ")
     
     def grub(self, dist):
         thumb_tip = self.hand_node[4]
