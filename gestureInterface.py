@@ -1,5 +1,5 @@
 #!/Users/sorakojima/proj/gestureInterface/.venv/bin/python
-from math import floor
+from numpy import floor
 import time
 
 import cv2
@@ -13,9 +13,9 @@ mp_drawing_styles = mp.solutions.drawing_styles
 mp_holistic = mp.solutions.holistic
 mp_hands = mp.solutions.hands
 
-min_detection_time = 0.3
-detectorR = gestureDetector(result=None, required_time=min_detection_time)
-detectorL = gestureDetector(result=None, required_time=min_detection_time)
+min_detection_frame = 10
+detectorR = gestureDetector(result=None, required_frame=min_detection_frame)
+detectorL = gestureDetector(result=None, required_frame=min_detection_frame)
 
 # For webcam input:
 cap = cv2.VideoCapture(0)
@@ -56,8 +56,15 @@ with mp_holistic.Holistic(
                                         mp_drawing_styles.get_default_hand_landmarks_style(),
                                         mp_drawing_styles.get_default_hand_connections_style())
             # detect right hand gesture
-            detectorR.updateResults(results.right_hand_landmarks)
+            detectorR.update(results.right_hand_landmarks)
+            detectorR.c.clear
             detectorR.detect()
+            # if cnt == 0:
+            #     print(f"befor {detectorR.pointDirection(8).x}")
+            #     cnt += 1
+            # elif cnt >= 0:
+            #     print(f"after {detectorR.pointDirection(8).x}")
+            #     cnt = 0
 
         # display FPS
         end_time = time.time()
