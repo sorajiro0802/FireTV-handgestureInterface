@@ -1,11 +1,11 @@
-from numpy import floor
 import time
 
+from numpy import floor
 import cv2
 import mediapipe as mp
 from common.gesture import *
 from common.fireTV import *
-import time
+
 
 mp_drawing = mp.solutions.drawing_utils
 mp_drawing_styles = mp.solutions.drawing_styles
