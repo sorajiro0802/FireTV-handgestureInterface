@@ -15,28 +15,33 @@ class gestureDetector:
         self.cur_point = 0
 
     def detect(self):
-        # if self.grub(0.1):
-        #     print("ぎゅっっ")
-        # else:
-        #     print("っっぱ")
         # 8：人差し指の先端
         self.pointDirection(8)
     
     def pointDirection(self, point_num):
+        # 1 count ≈ 0.035 sec
         if self.c.cnt == 0:
-            self.pre_point = np.array([self.hand_node[point_num].x, self.hand_node[point_num].y, self.hand_node[point_num].z])
+            self.pre_point = np.array( [self.hand_node[point_num].x,
+                                        self.hand_node[point_num].y,
+                                        self.hand_node[point_num].z])
             self.c.up()
-        if self.c.cnt == 10:
-            self.cur_point = np.array([self.hand_node[point_num].x, self.hand_node[point_num].y, self.hand_node[point_num].z])  
+        if self.c.cnt == self.required_frame:
+            self.cur_point = np.array( [self.hand_node[point_num].x, 
+                                        self.hand_node[point_num].y, 
+                                        self.hand_node[point_num].z])  
             self.c.clear()  
-        if self.c.cnt >= 1:
+        if self.c.cnt > 0:
             self.c.up()
-        try:
-            p = self.cur_point - self.pre_point
-            abs_p = np.linalg.norm(p, ord=2)
-            print(abs_p)
-        except:
-            pass
+        
+        P = self.cur_point - self.pre_point
+        abs_P = np.linalg.norm(P, ord=2)
+        
+        if P[1] >= 0: # P_y >= 0
+            angle = -np.arccos(P[0]/abs_P)
+        else:
+            angle = np.arccos(P[0]/abs_P)
+        angle = angle * 180 / np.pi # convert raian to degree
+        print(f'{angle=}[deg]')
         
 
     def grub(self, dist):
