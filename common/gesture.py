@@ -11,27 +11,28 @@ class gestureDetector:
         self.hand_node = None
         self.gesture = None
         self.c = Counter()
-        self.a = 0
-        self.b = 0
+        self.pre_vec = 0
+        self.cur_point = 0
 
     def detect(self):
         # if self.grub(0.1):
         #     print("ぎゅっっ")
         # else:
         #     print("っっぱ")
+        # 8：人差し指の先端
         self.pointDirection(8)
     
     def pointDirection(self, point_num):
         if self.c.cnt == 0:
-            self.a = np.array([self.hand_node[point_num].x, self.hand_node[point_num].y, self.hand_node[point_num].z])
+            self.pre_point = np.array([self.hand_node[point_num].x, self.hand_node[point_num].y, self.hand_node[point_num].z])
             self.c.up()
         if self.c.cnt == 10:
-            self.b = np.array([self.hand_node[point_num].x, self.hand_node[point_num].y, self.hand_node[point_num].z])  
+            self.cur_point = np.array([self.hand_node[point_num].x, self.hand_node[point_num].y, self.hand_node[point_num].z])  
             self.c.clear()  
         if self.c.cnt >= 1:
             self.c.up()
         try:
-            p = self.b - self.a
+            p = self.cur_point - self.pre_point
             abs_p = np.linalg.norm(p, ord=2)
             print(abs_p)
         except:
@@ -67,9 +68,6 @@ class gestureDetector:
     def updateResults(self, result):
         self.result = result
         self.hand_node = self.result.landmark
-    
-    def update(self, result):
-        self.updateResults(result)
         
     # test stub
     def finger1(self):
