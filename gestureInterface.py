@@ -55,7 +55,7 @@ with mp_holistic.Holistic(
                                         mp_drawing_styles.get_default_hand_landmarks_style(),
                                         mp_drawing_styles.get_default_hand_connections_style())
             # detect right hand gesture
-            detectorR.update(results.right_hand_landmarks)
+            detectorR.updateResults(results.right_hand_landmarks)
             detectorR.c.clear
             detectorR.detect()
             # if cnt == 0:
