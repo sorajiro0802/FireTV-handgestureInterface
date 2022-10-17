@@ -58,12 +58,6 @@ with mp_holistic.Holistic(
             detectorR.updateResults(results.right_hand_landmarks)
             detectorR.c.clear
             detectorR.detect()
-            # if cnt == 0:
-            #     print(f"befor {detectorR.pointDirection(8).x}")
-            #     cnt += 1
-            # elif cnt >= 0:
-            #     print(f"after {detectorR.pointDirection(8).x}")
-            #     cnt = 0
 
         # display FPS
         end_time = time.time()
