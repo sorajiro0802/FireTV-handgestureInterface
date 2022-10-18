@@ -1,5 +1,3 @@
-from multiprocessing import Process
-import time
 
 import numpy as np
 
@@ -35,14 +33,23 @@ class gestureDetector:
         
         P = self.cur_point - self.pre_point
         abs_P = np.linalg.norm(P, ord=2)
+        # print(f'{abs_P=}')
         
+        # arccosの値域を拡大する
         if P[1] >= 0: # P_y >= 0
             angle = -np.arccos(P[0]/abs_P)
         else:
             angle = np.arccos(P[0]/abs_P)
         angle = angle * 180 / np.pi # convert raian to degree
-        print(f'{angle=}[deg]')
-        
+        print(f'{angle=}')
+
+        '''
+        if  -45 < angle <= 45:
+            res = "Right"
+        elif -135 < angle <= 135:
+            res = "Left"
+        # elif -135 < angle 
+        '''
 
     def grub(self, dist):
         thumb_tip = self.hand_node[4]
