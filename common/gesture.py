@@ -1,3 +1,4 @@
+import asyncio
 
 import numpy as np
 
@@ -7,51 +8,82 @@ class gestureDetector:
         self.result = result
         self.required_frame = required_frame
         self.hand_node = None
-        self.gesture = None
-        self.c = Counter()
+        self.pre_point = 0
+        self.cur_point = 0
+        self.gesture = [[]]
+        self.c1 = Counter()
         self.pre_vec = 0
         self.cur_point = 0
-
+        self.dires = []
+        self.direction = None
+        
     def detect(self):
+        finger_direc = self.getPointsDirection(8)
+        isGrub = self.getGrub(0.2)
         # 8：人差し指の先端
-        self.pointDirection(8)
+        return isGrub, finger_direc
     
-    def pointDirection(self, point_num):
+    def getPointsDirection(self, point_num):
         # 1 count ≈ 0.035 sec
-        if self.c.cnt == 0:
+        if self.c1.cnt > 0:
+            self.c1.up()
+
+        if self.c1.cnt == 0:
+            # get 0s point
             self.pre_point = np.array( [self.hand_node[point_num].x,
                                         self.hand_node[point_num].y,
                                         self.hand_node[point_num].z])
-            self.c.up()
-        if self.c.cnt == self.required_frame:
+            self.c1.up()
+
+        if self.c1.cnt == self.required_frame:
+            # get 0.035*frame[s] point
             self.cur_point = np.array( [self.hand_node[point_num].x, 
                                         self.hand_node[point_num].y, 
                                         self.hand_node[point_num].z])  
-            self.c.clear()  
-        if self.c.cnt > 0:
-            self.c.up()
-        
-        P = self.cur_point - self.pre_point
-        abs_P = np.linalg.norm(P, ord=2)
-        # print(f'{abs_P=}')
-        
-        # arccosの値域を拡大する
-        if P[1] >= 0: # P_y >= 0
-            angle = -np.arccos(P[0]/abs_P)
-        else:
-            angle = np.arccos(P[0]/abs_P)
-        angle = angle * 180 / np.pi # convert raian to degree
-        print(f'{angle=}')
-
-        '''
-        if  -45 < angle <= 45:
-            res = "Right"
-        elif -135 < angle <= 135:
-            res = "Left"
-        # elif -135 < angle 
-        '''
-
-    def grub(self, dist):
+            P = self.cur_point - self.pre_point
+            abs_P = np.linalg.norm(P, ord=2)
+            if abs_P < 0.03:
+                direc = " "
+                pass
+            else:
+                # arccosの値域を拡大する
+                if P[1] >= 0: # P_y >= 0
+                    angle = -np.arccos(P[0]/abs_P)
+                else:
+                    angle = np.arccos(P[0]/abs_P)
+                angle = angle * 180 / np.pi # convert raian to degree
+                
+                # judge changed direction
+                if 0 <= angle < 45 or -45 <= angle < 0:
+                    direc = 'r'
+                elif 45 <= angle < 135:
+                    direc = 'u'
+                elif -135 <= angle < -45:
+                    direc = 'd'
+                else:
+                    direc = 'l'
+            
+                    
+            self.dires.insert(0, direc) #queue
+            if len(self.dires) == 2:
+                dires_sum = "".join(self.dires)
+                if dires_sum == "rr":
+                    self.direction = "R"
+                elif dires_sum == "ll":
+                    self.direction = "L"
+                elif dires_sum == "uu":
+                    self.direction = "U"
+                elif dires_sum == "dd":
+                    self.direction = "D"
+                else:
+                    self.direction = None
+                self.dires.pop()
+                
+            self.c1.clear()
+        return self.direction
+            
+    
+    def getGrub(self, dist):
         thumb_tip = self.hand_node[4]
         index_finger_mcp = self.hand_node[5]
         middle_finger_pip = self.hand_node[10]
@@ -99,4 +131,4 @@ class Counter:
         self.cnt = 0
 
 if __name__=='__main__':
-    pass
+    print(f"hello {__name__}")

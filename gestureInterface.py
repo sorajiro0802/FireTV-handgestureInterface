@@ -12,7 +12,7 @@ mp_drawing_styles = mp.solutions.drawing_styles
 mp_holistic = mp.solutions.holistic
 mp_hands = mp.solutions.hands
 
-min_detection_frame = 10
+min_detection_frame = 2
 detectorR = gestureDetector(result=None, required_frame=min_detection_frame)
 detectorL = gestureDetector(result=None, required_frame=min_detection_frame)
 
@@ -56,8 +56,7 @@ with mp_holistic.Holistic(
                                         mp_drawing_styles.get_default_hand_connections_style())
             # detect right hand gesture
             detectorR.updateResults(results.right_hand_landmarks)
-            detectorR.c.clear
-            detectorR.detect()
+            print(f"{detectorR.detect()=}")
 
         # display FPS
         end_time = time.time()
