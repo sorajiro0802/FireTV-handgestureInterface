@@ -64,13 +64,13 @@ class gestureDetector:
             if len(self.dires) == 2:
                 dires_sum = "".join(self.dires)
                 if dires_sum == "rr":
-                    self.direction = "R"
+                    self.direction = "Right"
                 elif dires_sum == "ll":
-                    self.direction = "L"
+                    self.direction = "Left"
                 elif dires_sum == "uu":
-                    self.direction = "U"
+                    self.direction = "Up"
                 elif dires_sum == "dd":
-                    self.direction = "D"
+                    self.direction = "Down"
                 else:
                     self.direction = None
                 self.dires.pop()
