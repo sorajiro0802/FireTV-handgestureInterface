@@ -3,7 +3,7 @@ import time
 from numpy import floor
 import cv2
 import mediapipe as mp
-from common.gesture import *
+from common.gesture import gestureDetector
 from common.fireTV import *
 
 
@@ -12,7 +12,7 @@ mp_drawing_styles = mp.solutions.drawing_styles
 mp_holistic = mp.solutions.holistic
 mp_hands = mp.solutions.hands
 
-min_detection_frame = 2
+min_detection_frame = 3
 detectorR = gestureDetector(result=None, required_frame=min_detection_frame)
 detectorL = gestureDetector(result=None, required_frame=min_detection_frame)
 
