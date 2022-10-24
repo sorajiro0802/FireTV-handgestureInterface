@@ -31,15 +31,13 @@ class gestureDetector:
         if self.c1.cnt == 0:
             # get 0s point
             self.pre_point = np.array( [self.hand_node[point_num].x,
-                                        self.hand_node[point_num].y,
-                                        self.hand_node[point_num].z])
+                                        self.hand_node[point_num].y])
             self.c1.up()
 
         if self.c1.cnt == self.required_frame:
             # get 0.035*frame[s] point
             self.cur_point = np.array( [self.hand_node[point_num].x, 
-                                        self.hand_node[point_num].y, 
-                                        self.hand_node[point_num].z])  
+                                        self.hand_node[point_num].y])  
             P = self.cur_point - self.pre_point
             abs_P = np.linalg.norm(P, ord=2)
             if abs_P < 0.03:
@@ -51,7 +49,7 @@ class gestureDetector:
                     angle = -np.arccos(P[0]/abs_P)
                 else:
                     angle = np.arccos(P[0]/abs_P)
-                angle = angle * 180 / np.pi # convert raian to degree
+                angle = angle * 180 / np.pi # convert radian to degree
                 
                 # judge changed direction
                 if 0 <= angle < 45 or -45 <= angle < 0:
@@ -62,9 +60,7 @@ class gestureDetector:
                     direc = 'd'
                 else:
                     direc = 'l'
-            
-                    
-            self.dires.insert(0, direc) #queue
+            self.dires.insert(0, direc) #enqueue
             if len(self.dires) == 2:
                 dires_sum = "".join(self.dires)
                 if dires_sum == "rr":
