@@ -1,10 +1,12 @@
 import time
+import sys
 
 from numpy import floor
 import cv2
 import mediapipe as mp
 from common.gesture import gestureDetector
-from common.fireTV import *
+from common.fireTV import FTVController
+from common.utils import map_all
 
 
 mp_drawing = mp.solutions.drawing_utils
@@ -16,9 +18,16 @@ min_detection_frame = 3
 detectorR = gestureDetector(result=None, required_frame=min_detection_frame)
 detectorL = gestureDetector(result=None, required_frame=min_detection_frame)
 
+# For fireTV connection
+fc = FTVController(ip='192.168.0.20', port=5555)
+if fc.connect() == 1:
+    sys.exit()
+
 # For webcam input:
 cap = cv2.VideoCapture(0)
 start_time = 0
+
+dire_queue = []
 
 with mp_holistic.Holistic(
     min_detection_confidence=0.5,
@@ -40,6 +49,12 @@ with mp_holistic.Holistic(
         image.flags.writeable = True
         image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
 
+        # display FPS
+        end_time = time.time()
+        erapsed_time = end_time - start_time
+        start_time = 0
+        cv2.putText(image, f"{floor(1/erapsed_time)}fps", (60, 60), cv2.FONT_HERSHEY_PLAIN, 2, (0, 255, 0), 2, cv2.LINE_AA)
+
         # draw hands
         if results.left_hand_landmarks:
             mp_drawing.draw_landmarks(  image,
@@ -56,14 +71,16 @@ with mp_holistic.Holistic(
                                         mp_drawing_styles.get_default_hand_connections_style())
             # detect right hand gesture
             detectorR.updateResults(results.right_hand_landmarks)
-            print(f"{detectorR.detect()=}")
+            _, dire_R = detectorR.detect()
+            if not dire_R is None:
+                dire_queue.insert(0, dire_R)
+                if len(dire_queue) == 5:
+                    dire_queue.pop()
 
-        # display FPS
-        end_time = time.time()
-        erapsed_time = end_time - start_time
-        start_time = 0
-        cv2.putText(image, f"{floor(1/erapsed_time)}fps", (60, 60), cv2.FONT_HERSHEY_PLAIN, 2, (0, 255, 0), 2, cv2.LINE_AA)
-        
+                if map_all(dire_queue):
+                    fc.command(dire_R)
+
+
         # Flip the image horizontally for a selfie-view display.
         #cv2.imshow('MediaPipe Hands', cv2.flip(image, 1))
         # not flip the image
@@ -73,3 +90,4 @@ with mp_holistic.Holistic(
         if cv2.waitKey(5) & 0xFF == 27:
             break
 cap.release()
+fc.kill()
