@@ -53,13 +53,13 @@ class gestureDetector:
                 
                 # judge changed direction
                 if 0 <= angle < 45 or -45 <= angle < 0:
-                    direc = 'r'
+                    direc = 'l'
                 elif 45 <= angle < 135:
                     direc = 'u'
                 elif -135 <= angle < -45:
                     direc = 'd'
                 else:
-                    direc = 'l'
+                    direc = 'r'
             self.dires.insert(0, direc) #enqueue
             if len(self.dires) == 2:
                 dires_sum = "".join(self.dires)
