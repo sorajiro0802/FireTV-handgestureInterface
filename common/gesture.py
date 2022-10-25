@@ -18,9 +18,9 @@ class gestureDetector:
         self.direction = None
         
     def detect(self):
+        # 8：人差し指の先端
         finger_direc = self.getPointsDirection(8)
         isGrub = self.getGrub(0.2)
-        # 8：人差し指の先端
         return isGrub, finger_direc
     
     def getPointsDirection(self, point_num):
