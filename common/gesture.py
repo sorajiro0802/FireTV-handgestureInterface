@@ -17,7 +17,7 @@ class gestureDetector:
     def detect(self):
         # 8：人差し指の先端
         finger_direc = self.getPointsDirection(8)
-        isGrub = self.getGrub(0.2)
+        isGrub = self.getGrub(0.1)
         return isGrub, finger_direc
     
     def getPointsDirection(self, point_num):
@@ -105,10 +105,6 @@ class gestureDetector:
     def updateResults(self, result):
         self.result = result
         self.hand_node = self.result.landmark
-        
-    # test stub
-    def finger1(self):
-        print(self.result.landmark[8])
 
 class Counter:
     def __init__(self):
