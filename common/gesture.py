@@ -1,5 +1,3 @@
-import asyncio
-
 import numpy as np
 
 class gestureDetector:
@@ -10,7 +8,6 @@ class gestureDetector:
         self.hand_node = None
         self.pre_point = 0
         self.cur_point = 0
-        self.gesture = [[]]
         self.c1 = Counter()
         self.pre_vec = 0
         self.cur_point = 0
