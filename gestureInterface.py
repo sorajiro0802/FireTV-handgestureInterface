@@ -32,8 +32,6 @@ start_time = 0
 # left, right
 dire_queue = [["",""], ["",""]]
 dire_flag = [False, False]
-grub_queue = [["",""], ["",""]]
-grub_flag = [False, False]
 command_flag = {"lhand":{"grub": False, "dire": None},
                 "rhand":{"grub": False, "dire": None}}
 command_map = {"Up":{
