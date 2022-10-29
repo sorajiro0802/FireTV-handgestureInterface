@@ -24,14 +24,17 @@ class FTVController:
             return 0
         else:
             print('could not connect')
-            return 1
+            return None
 
     def command(self, key):
         if subprocess.run(['adb', 'shell', 'input', 'keyevent', str(self.gesture_order_map[key])]):
             print(f'send {key} command')
     
     def kill(self):
-        subprocess.run(['adb', 'kill-server'])
+        if subprocess.run(['adb', 'kill-server']):
+            print("\nSuccessfully disconnected")
+        else:
+            print("\nCouldn't kill server...")
     
     def restart(self):
         subprocess.run(['adb', 'start-server'])
