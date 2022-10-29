@@ -6,7 +6,6 @@ import cv2
 import mediapipe as mp
 from common.gesture import gestureDetector
 from common.fireTV import FTVController
-from common.utils import map_all
 
 
 mp_drawing = mp.solutions.drawing_utils
@@ -21,7 +20,7 @@ detectorL = gestureDetector(result=None, required_frame=min_detection_frame)
 # For fireTV connection
 fc = FTVController(ip='192.168.0.20', port=5555)
 # stop if can not connect
-if fc.connect() == 1:
+if not fc.connect():
     sys.exit()
 
 # For webcam input:
@@ -149,4 +148,4 @@ with mp_holistic.Holistic(
         if cv2.waitKey(5) & 0xFF == 27:
             break
 cap.release()
-# fc.kill()
+fc.kill()
