@@ -24,7 +24,7 @@ class FTVController:
             return 0
         else:
             print('could not connect')
-            return None
+            return 1
 
     def command(self, key):
         if subprocess.run(['adb', 'shell', 'input', 'keyevent', str(self.gesture_order_map[key])]):

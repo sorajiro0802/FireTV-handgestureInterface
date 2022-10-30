@@ -20,7 +20,7 @@ detectorL = gestureDetector(result=None, required_frame=min_detection_frame)
 # For fireTV connection
 fc = FTVController(ip='192.168.0.20', port=5555)
 # stop if can not connect
-if not fc.connect():
+if not fc.connect() == 0:
     sys.exit()
 
 # For webcam input:
