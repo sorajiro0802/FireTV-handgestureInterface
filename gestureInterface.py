@@ -25,10 +25,8 @@ if not fc.connect() == 0:
 
 # For webcam input:
 cap = cv2.VideoCapture(0)
-# For FPS calc
-start_time = 0
 # For one time execution
-# left, right
+#  left, right
 dire_queue = [["",""], ["",""]]
 dire_flag = [False, False]
 command_flag = {"lhand":{"grub": False, "dire": None},
@@ -54,6 +52,8 @@ with mp_holistic.Holistic(
     min_detection_confidence=0.5,
     min_tracking_confidence=0.5) as hands:
     while cap.isOpened():
+        # for FPS
+        tick = cv2.getTickCount()
         command_flag_c = {"lhand":{"grub": False, "dire": None},
                           "rhand":{"grub": False, "dire": None}}
         success, image = cap.read()
@@ -73,10 +73,8 @@ with mp_holistic.Holistic(
         image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
 
         # display FPS
-        end_time = time.time()
-        erapsed_time = end_time - start_time
-        start_time = 0
-        cv2.putText(image, f"{floor(1/erapsed_time)}fps", (60, 60), cv2.FONT_HERSHEY_PLAIN, 2, (0, 255, 0), 2, cv2.LINE_AA)
+        fps = cv2.getTickFrequency() / (cv2.getTickCount() - tick)
+        cv2.putText(image, f"{floor(fps)}fps", (60, 60), cv2.FONT_HERSHEY_PLAIN, 2, (0, 255, 0), 2, cv2.LINE_AA)
 
         if results.left_hand_landmarks:
             # draw Left hand landmarks
