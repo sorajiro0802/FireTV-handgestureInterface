@@ -25,12 +25,7 @@ detectorL = gestureDetector(result=None, required_frame=min_detection_frame)
 
 # For webcam input:
 cap = cv2.VideoCapture(0)
-# For one time execution
-#  left, right
-dire_queue = [["",""], ["",""]]
-dire_flag = [False, False]
-command_flag = {"lhand":{"grub": False, "dire": None},
-                "rhand":{"grub": False, "dire": None}}
+
 command_map = {"Up":{
                     "lhand":{"grub":True, "dire":None},
                     "rhand":{"grub":True, "dire":"Up"}},
@@ -45,7 +40,7 @@ command_map = {"Up":{
                     "rhand":{"grub":True, "dire":"Right"}},
                "Select":{
                     "lhand":{"grub":False, "dire":None},
-                    "rhand":{"grub":True, "dire":None}}
+                    "rhand":{"grub":True,  "dire":None}}
                }
 
 with mp_holistic.Holistic(
@@ -54,8 +49,9 @@ with mp_holistic.Holistic(
     while cap.isOpened():
         # for FPS
         tick = cv2.getTickCount()
-        command_flag_c = {"lhand":{"grub": False, "dire": None},
-                          "rhand":{"grub": False, "dire": None}}
+        command_flag = {"lhand":{"grub": None, "dire": None},
+                        "rhand":{"grub": None, "dire": None}}
+        command_flag_tmp = command_flag.copy()
         success, image = cap.read()
         if not success:
             print("Ignoring empty camera frame.")
@@ -75,70 +71,44 @@ with mp_holistic.Holistic(
         # display FPS
         fps = cv2.getTickFrequency() / (cv2.getTickCount() - tick)
         cv2.putText(image, f"{floor(fps)}fps", (60, 60), cv2.FONT_HERSHEY_PLAIN, 2, (0, 255, 0), 2, cv2.LINE_AA)
+        erapsed_time = (cv2.getTickCount() - tick) / cv2.getTickFrequency()
 
         if results.left_hand_landmarks:
-            # draw Left hand landmarks
+            # draw LeftHand landmarks
             mp_drawing.draw_landmarks(  image,
                                         results.left_hand_landmarks,
                                         mp_holistic.HAND_CONNECTIONS,
                                         mp_drawing_styles.get_default_hand_landmarks_style(),
                                         mp_drawing_styles.get_default_hand_connections_style())
+            # detect gesture of LeftHand
             detectorL.updateResults(results.left_hand_landmarks)
-            grub, dire = detectorL.detect()
-
+            grub, dire = detectorL.detect(erapsed_time)
             command_flag["lhand"]["grub"] = grub
-            # ignore consequenced judge
-            #  direction
-            if not dire is None:
-                dire_queue[0].insert(0, dire)
-                cur_dire = dire_queue[0][0]
-                pre_dire = dire_queue[0][1]
-                if dire_flag[0] == False:
-                    if pre_dire != cur_dire:
-                        dire_flag[0] = True
-                        command_flag["lhand"]["dire"] = cur_dire
-                else:
-                    # do below when direction changed
-                    dire_flag[0] = False
-                    command_flag["lhand"]["dire"] = None
+            command_flag["lhand"]["dire"] = dire
 
         if results.right_hand_landmarks:
-            # draw Right hand landmarks
+            # draw RightHand landmarks
             mp_drawing.draw_landmarks(  image,
                                         results.right_hand_landmarks,
                                         mp_holistic.HAND_CONNECTIONS,
                                         mp_drawing_styles.get_default_hand_landmarks_style(),
                                         mp_drawing_styles.get_default_hand_connections_style())
-            # detect Right hand gesture
+            # detect gesture of RightHand
             detectorR.updateResults(results.right_hand_landmarks)
-            grub, dire = detectorR.detect()
-
+            grub, dire = detectorR.detect(erapsed_time)
             command_flag["rhand"]["grub"] = grub
-            # ignore cosequenced judge
-            #  direction
-            if not dire is None:
-                dire_queue[1].insert(0, dire)
-                cur_dire = dire_queue[1][0]
-                pre_dire = dire_queue[1][1]
-                if dire_flag[1] == False:
-                    if pre_dire != cur_dire:
-                        dire_flag[1] = True
-                        command_flag["rhand"]["dire"] = cur_dire
-                else:
-                    # do below when direction changed
-                    dire_flag[1] = False
-                    command_flag["rhand"]["dire"] = None
-        
+            command_flag["rhand"]["dire"] = dire
         print(command_flag)
         for cmk in command_map.keys():
             if command_flag == command_map.get(cmk):
-                print(f"{cmk=}")
+                print(f"{cmk}=")
                 # send command
                 # fc.command(cmk)
-                command_flag = command_flag_c
-
+        
+        # reset command flag
+        command_flag = command_flag_tmp
         # Flip the image horizontally for a selfie-view display.
-        #cv2.imshow('MediaPipe Hands', cv2.flip(image, 1))
+        #cv2.imshow('FireTV HandGesture Controller', cv2.flip(image, 1))
         # not flip the image
         cv2.imshow('FireTV HandGesture Controller', image)
 
