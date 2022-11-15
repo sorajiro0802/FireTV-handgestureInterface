@@ -6,21 +6,18 @@ class gestureDetector:
         self.result = result
         self.required_frame = required_frame
         self.hand_node = None
-        self.pre_point = 0
-        self.cur_point = 0
+        self.pre_point, self.cur_point = 0, 0
         self.c1 = Counter()
-        self.pre_vec = 0
-        self.cur_point = 0
         self.dires = []
         self.direction = None
         
-    def detect(self):
+    def detect(self, erapsed_time):
         # 8：人差し指の先端
-        finger_direc = self.getPointsDirection(8)
+        finger_direc = self.getPointsDirection(8, erapsed_time)
         isGrub = self.getGrub(0.1)
         return isGrub, finger_direc
     
-    def getPointsDirection(self, point_num):
+    def getPointsDirection(self, point_num, erapsed_time):
         # 1 count ≈ 0.035 sec
         if self.c1.cnt > 0:
             self.c1.up()
@@ -49,11 +46,11 @@ class gestureDetector:
                 angle = angle * 180 / np.pi # convert radian to degree
                 
                 # judge changed direction
-                if 0 <= angle < 30 or -30 <= angle < 0:
+                if 0 <= angle < 45 or -45 <= angle < 0:
                     direc = 'l'
-                elif 60 <= angle < 120:
+                elif 45 <= angle < 135:
                     direc = 'u'
-                elif -125 <= angle < -60:
+                elif -135 <= angle < -45:
                     direc = 'd'
                 else:
                     direc = 'r'
@@ -72,7 +69,11 @@ class gestureDetector:
                     self.direction = None
                 self.dires.pop()
             self.c1.clear()
-        return self.direction
+            
+            # Judging by threshold of acceleration
+            ac = abs_P / erapsed_time**2
+            if ac > 45 and self.direction:
+                return self.direction
             
     
     def getGrub(self, dist):
