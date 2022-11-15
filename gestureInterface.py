@@ -17,11 +17,11 @@ min_detection_frame = 3
 detectorR = gestureDetector(result=None, required_frame=min_detection_frame)
 detectorL = gestureDetector(result=None, required_frame=min_detection_frame)
 
-# For fireTV connection
-fc = FTVController(ip='192.168.0.20', port=5555)
-# stop if can not connect
-if not fc.connect() == 0:
-    sys.exit()
+# # For fireTV connection
+# fc = FTVController(ip='192.168.0.20', port=5555)
+# # stop if can not connect
+# if not fc.connect() == 0:
+#     sys.exit()
 
 # For webcam input:
 cap = cv2.VideoCapture(0)
@@ -134,7 +134,7 @@ with mp_holistic.Holistic(
             if command_flag == command_map.get(cmk):
                 print(f"{cmk=}")
                 # send command
-                fc.command(cmk)
+                # fc.command(cmk)
                 command_flag = command_flag_c
 
         # Flip the image horizontally for a selfie-view display.
@@ -146,4 +146,4 @@ with mp_holistic.Holistic(
         if cv2.waitKey(5) & 0xFF == 27:
             break
 cap.release()
-fc.kill()
+# fc.kill()
