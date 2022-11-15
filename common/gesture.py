@@ -49,11 +49,11 @@ class gestureDetector:
                 angle = angle * 180 / np.pi # convert radian to degree
                 
                 # judge changed direction
-                if 0 <= angle < 45 or -45 <= angle < 0:
+                if 0 <= angle < 30 or -30 <= angle < 0:
                     direc = 'l'
-                elif 45 <= angle < 135:
+                elif 60 <= angle < 120:
                     direc = 'u'
-                elif -135 <= angle < -45:
+                elif -125 <= angle < -60:
                     direc = 'd'
                 else:
                     direc = 'r'
@@ -71,7 +71,6 @@ class gestureDetector:
                 else:
                     self.direction = None
                 self.dires.pop()
-                
             self.c1.clear()
         return self.direction
             
