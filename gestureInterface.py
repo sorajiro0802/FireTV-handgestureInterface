@@ -27,22 +27,22 @@ detectorL = gestureDetector(result=None, required_frame=min_detection_frame)
 cap = cv2.VideoCapture(0)
 
 command_map = { "Up":{
-                    "lhand":{"grub":True, "dire":None},
+                    "lhand":{"grub":None, "dire":None},
                     "rhand":{"grub":True, "dire":"Up"}},
                 "Down":{
-                    "lhand":{"grub":True, "dire":None},
+                    "lhand":{"grub":None, "dire":None},
                     "rhand":{"grub":True, "dire":"Down"}},
                 "Left":{
-                    "lhand":{"grub":True, "dire":None},
+                    "lhand":{"grub":None, "dire":None},
                     "rhand":{"grub":True, "dire":"Left"}},
                 "Right":{
-                    "lhand":{"grub":True, "dire":None},
+                    "lhand":{"grub":None, "dire":None},
                     "rhand":{"grub":True, "dire":"Right"}},
                 "Select":{
-                    "lhand":{"grub":False, "dire":None},
+                    "lhand":{"grub":True, "dire":None},
                     "rhand":{"grub":True,  "dire":None}}, 
                 "Back":{
-                    "lhand":{"grub":False, "dire":None},
+                    "lhand":{"grub":None, "dire":None},
                     "rhand":{"grub":False, "dire":"Left"}}
                 }
 
