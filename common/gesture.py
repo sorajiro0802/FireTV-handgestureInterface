@@ -77,26 +77,14 @@ class gestureDetector:
             
     
     def getGrub(self, dist):
-        thumb_tip = self.hand_node[4]
-        index_finger_mcp = self.hand_node[5]
-        middle_finger_pip = self.hand_node[10]
-        ring_finger_pip = self.hand_node[14]
+        thumb_tip = np.array([self.hand_node[4].x, self.hand_node[4].y, self.hand_node[4].z])
+        index_finger_mcp = np.array([self.hand_node[5].x, self.hand_node[5].y, self.hand_node[5].z])
+        middle_finger_pip = np.array([self.hand_node[10].x, self.hand_node[10].y, self.hand_node[10].z])
+        ring_finger_pip = np.array([self.hand_node[14].x, self.hand_node[14].y, self.hand_node[14].z])
         
-        dist4_5 = np.sqrt(
-            (thumb_tip.x-index_finger_mcp.x)**2 +
-            (thumb_tip.y-index_finger_mcp.y)**2 +
-            (thumb_tip.z-index_finger_mcp.z)**2
-        )
-        dist4_10 = np.sqrt(
-            (thumb_tip.x-middle_finger_pip.x)**2 +
-            (thumb_tip.y-middle_finger_pip.y)**2 +
-            (thumb_tip.z-middle_finger_pip.z)**2
-        )
-        dist4_14 = np.sqrt(
-            (thumb_tip.x-ring_finger_pip.x)**2 +
-            (thumb_tip.y-ring_finger_pip.y)**2 +
-            (thumb_tip.z-ring_finger_pip.z)**2
-        )
+        dist4_5 = np.linalg.norm(thumb_tip-index_finger_mcp, ord=2)
+        dist4_10 = np.linalg.norm(thumb_tip-middle_finger_pip, ord=2)
+        dist4_14 = np.linalg.norm(thumb_tip-ring_finger_pip, ord=2)
         if (dist4_10 or dist4_5 or dist4_14) <= dist:
             return True
         else:
