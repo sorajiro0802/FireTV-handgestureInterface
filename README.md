@@ -1,5 +1,5 @@
 # FireTV-handgestureInterface
-ハンドジェスチャーでAmazon Fire TV を操作する。（未完成）
+ハンドジェスチャーでAmazon Fire TV を操作する。
 
 >>## My Environment
 >* MacBook Pro 13inch 2020 (M1)
