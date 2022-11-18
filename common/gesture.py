@@ -72,7 +72,7 @@ class gestureDetector:
             
             # Judging by threshold of acceleration
             ac = abs_P / erapsed_time**2
-            if ac > 45 and self.direction:
+            if ac > 40 and self.direction:
                 return self.direction
             
     

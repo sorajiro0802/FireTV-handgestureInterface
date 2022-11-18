@@ -18,7 +18,7 @@ detectorR = gestureDetector(result=None, required_frame=min_detection_frame)
 detectorL = gestureDetector(result=None, required_frame=min_detection_frame)
 
 # # For fireTV connection
-# fc = FTVController(ip='192.168.0.20', port=5555)
+# fc = FTVController(ip='192.168.0.20')
 # # stop if can not connect
 # if not fc.connect() == 0:
 #     sys.exit()
@@ -26,22 +26,25 @@ detectorL = gestureDetector(result=None, required_frame=min_detection_frame)
 # For webcam input:
 cap = cv2.VideoCapture(0)
 
-command_map = {"Up":{
+command_map = { "Up":{
                     "lhand":{"grub":True, "dire":None},
                     "rhand":{"grub":True, "dire":"Up"}},
-               "Down":{
+                "Down":{
                     "lhand":{"grub":True, "dire":None},
                     "rhand":{"grub":True, "dire":"Down"}},
-               "Left":{
+                "Left":{
                     "lhand":{"grub":True, "dire":None},
                     "rhand":{"grub":True, "dire":"Left"}},
-               "Right":{
+                "Right":{
                     "lhand":{"grub":True, "dire":None},
                     "rhand":{"grub":True, "dire":"Right"}},
-               "Select":{
+                "Select":{
                     "lhand":{"grub":False, "dire":None},
-                    "rhand":{"grub":True,  "dire":None}}
-               }
+                    "rhand":{"grub":True,  "dire":None}}, 
+                "Back":{
+                    "lhand":{"grub":False, "dire":None},
+                    "rhand":{"grub":False, "dire":"Left"}}
+                }
 
 with mp_holistic.Holistic(
     min_detection_confidence=0.5,

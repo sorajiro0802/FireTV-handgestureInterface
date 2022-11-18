@@ -1,7 +1,7 @@
 import subprocess
 
 class FTVController:
-    def __init__(self, ip, port):
+    def __init__(self, ip, port=5555):
         self.ip = ip
         self.port = port
         # adb keyevent num is below
@@ -24,7 +24,7 @@ class FTVController:
             return 0
         else:
             print('could not connect')
-            return 1
+            return -1
 
     def command(self, key):
         if subprocess.run(['adb', 'shell', 'input', 'keyevent', str(self.gesture_order_map[key])]):
