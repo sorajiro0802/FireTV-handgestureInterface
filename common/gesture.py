@@ -36,7 +36,6 @@ class gestureDetector:
             abs_P = np.linalg.norm(P, ord=2)
             if abs_P < 0.03:
                 direc = " "
-                pass
             else:
                 # arccosの値域を拡大する
                 if P[1] >= 0: # P_y >= 0
@@ -75,7 +74,6 @@ class gestureDetector:
             if ac > 40 and self.direction:
                 return self.direction
             
-    
     def getGrub(self, dist):
         thumb_tip = np.array([self.hand_node[4].x, self.hand_node[4].y, self.hand_node[4].z])
         index_finger_mcp = np.array([self.hand_node[5].x, self.hand_node[5].y, self.hand_node[5].z])
