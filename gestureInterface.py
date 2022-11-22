@@ -77,7 +77,7 @@ class gestureInterface:
                 for cmk in self.command_map.keys():
                     if command_flag == self.command_map.get(cmk):
                         print(f"{cmk=}")
-                        return cmk
+                        return cmk, True
                         # send command
                 
                 # reset command flag

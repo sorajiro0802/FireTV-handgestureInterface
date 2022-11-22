@@ -35,9 +35,11 @@ command_map = { "Up":{
                 }
 exe_command = []
 gi = gestureInterface(cap, command_map)
+# for stop whileTrue when window closed
+isAlive = True
 
-while True:
-    ans = gi.Interface()
+while isAlive:
+    ans, isAlive = gi.Interface()
     exe_command.append(ans)
     # send command
     # fc.command(exe_command)
