@@ -6,7 +6,6 @@ from gestureInterface import gestureInterface
 from common.fireTV import FTVController
 
 
-start_time = time.time()
 # for camera input
 cap = cv2.VideoCapture(0)
 # # for FireTV Connection
@@ -38,7 +37,6 @@ exe_command = []
 gi = gestureInterface(cap, command_map)
 
 while True:
-    erapsed_time = time.time() - start_time
     ans = gi.Interface()
     exe_command.append(ans)
     # send command
