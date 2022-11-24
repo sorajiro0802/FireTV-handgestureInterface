@@ -1,18 +1,17 @@
 import sys
-import time
 
 import cv2
-from gestureInterface import gestureInterface
+from gestureInterface import GestureInterface
 from common.fireTV import FTVController
 
 
-# for camera input
+# for cam era input
 cap = cv2.VideoCapture(0)
-# # for FireTV Connection
-# fc = FTVController(ip="192.168.0.20")
-# # stop if cann not connect
-# if not fc.connect()==0:
-#     sys.exit()
+# for FireTV Connection
+fc = FTVController(ip="192.168.0.20")
+# stop if cann not connect
+if not fc.connect()==0:
+    sys.exit()
 
 command_map = { "Up":{
                     "lhand":{"grub":None, "dire":None},
@@ -33,18 +32,19 @@ command_map = { "Up":{
                     "lhand":{"grub":None, "dire":None},
                     "rhand":{"grub":False, "dire":"Left"}}
                 }
-exe_command = []
-gi = gestureInterface(cap, command_map)
+exe_commands = []
+gi = GestureInterface(cap, command_map)
+
 # for stop whileTrue when window closed
 isAlive = True
-
 while isAlive:
     ans, isAlive = gi.Interface()
-    exe_command.append(ans)
+    exe_commands.append(ans)
     # send command
-    # fc.command(exe_command)
-    
-    
+    while exe_commands:
+        command = exe_commands.pop(0)
+        fc.command(command)
+
 
 if __name__=="__name__":
     pass
