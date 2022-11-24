@@ -79,11 +79,13 @@ class gestureDetector:
         index_finger_mcp = np.array([self.hand_node[5].x, self.hand_node[5].y, self.hand_node[5].z])
         middle_finger_pip = np.array([self.hand_node[10].x, self.hand_node[10].y, self.hand_node[10].z])
         ring_finger_pip = np.array([self.hand_node[14].x, self.hand_node[14].y, self.hand_node[14].z])
+        middle_finger_tip = np.array([self.hand_node[12].x, self.hand_node[12].y, self.hand_node[12].z])
         
         dist4_5 = np.linalg.norm(thumb_tip-index_finger_mcp, ord=2)
         dist4_10 = np.linalg.norm(thumb_tip-middle_finger_pip, ord=2)
         dist4_14 = np.linalg.norm(thumb_tip-ring_finger_pip, ord=2)
-        if (dist4_10 or dist4_5 or dist4_14) <= dist:
+        dist4_12 = np.linalg.norm(thumb_tip-middle_finger_tip, ord=2)
+        if (dist4_10 or dist4_5 or dist4_12 or dist4_14) <= dist:
             return True
         else:
             return False
@@ -95,13 +97,10 @@ class gestureDetector:
 class Counter:
     def __init__(self):
         self.cnt = 0
-
     def up(self):
         self.cnt += 1
-    
     def down(self):
         self.cnt -= 1
-
     def clear(self):
         self.cnt = 0
 
