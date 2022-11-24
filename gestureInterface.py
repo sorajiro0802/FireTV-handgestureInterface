@@ -3,7 +3,7 @@ import cv2
 import mediapipe as mp
 from common.gesture import gestureDetector
 
-class gestureInterface:
+class GestureInterface:
     def __init__(self, cap, command_map):
         self.cap = cap
         self.command_map = command_map
