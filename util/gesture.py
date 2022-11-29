@@ -83,8 +83,8 @@ class gestureDetector:
         
         dist4_5 = np.linalg.norm(thumb_tip-index_finger_mcp, ord=2)
         dist4_10 = np.linalg.norm(thumb_tip-middle_finger_pip, ord=2)
-        dist4_14 = np.linalg.norm(thumb_tip-ring_finger_pip, ord=2)
         dist4_12 = np.linalg.norm(thumb_tip-middle_finger_tip, ord=2)
+        dist4_14 = np.linalg.norm(thumb_tip-ring_finger_pip, ord=2)
         if (dist4_10 or dist4_5 or dist4_12 or dist4_14) <= dist:
             return True
         else:
