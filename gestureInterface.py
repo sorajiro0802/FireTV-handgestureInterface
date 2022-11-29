@@ -1,7 +1,7 @@
 from numpy import floor
 import cv2
 import mediapipe as mp
-from common.gesture import gestureDetector
+from util.gesture import gestureDetector
 
 class GestureInterface:
     def __init__(self, cap, command_map):

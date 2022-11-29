@@ -2,7 +2,7 @@ import sys
 
 import cv2
 from gestureInterface import GestureInterface
-from common.fireTV import FTVController
+from util.fireTV import FTVController
 
 # for camera input
 cap = cv2.VideoCapture(0)
