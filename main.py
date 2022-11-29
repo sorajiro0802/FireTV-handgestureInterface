@@ -32,7 +32,11 @@ if __name__=="__main__":
                         "rhand":{"grub":True,  "dire":None}}, 
                     "Back":{
                         "lhand":{"grub":None, "dire":None},
-                        "rhand":{"grub":False, "dire":"Left"}}
+                        "rhand":{"grub":False, "dire":"Left"}},
+                    "Home":{
+                        "lhand":{"grub":False, "dire":"Up"},
+                        "rhand":{"grub":False, "dire":"Up"}
+                    }
                     }
     exe_commands = []
     gi = GestureInterface(cap, command_map)
