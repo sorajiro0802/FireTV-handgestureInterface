@@ -5,14 +5,21 @@ import cv2
 from gestureInterface import GestureInterface
 from util.fireTV import FTVController
 
+class FTVController:
+    def __init__(self, ip):
+        self.ip = ip
+    def connect(self):
+        return 0
+    def command(self, command):
+        print(command)
 
 if __name__=="__main__":
     # for camera input
     cap = cv2.VideoCapture(0)
     # for FireTV Connection
-    fc = FTVController(ip="192.168.0.20")
+    target = FTVController(ip="192.168.0.20")
     # stop if cann not connect
-    if not fc.connect()==0:
+    if not target.connect()==0:
         sys.exit()
     # define original gesture
     command_map = { "Up":{
@@ -49,5 +56,5 @@ if __name__=="__main__":
         # send command
         while exe_commands:
             command = exe_commands.pop(0)
-            exe_thread = threading.Thread(target=fc.command, args=(command,), daemon=True)
+            exe_thread = threading.Thread(target=target.command, args=(command,), daemon=True)
             exe_thread.start()
