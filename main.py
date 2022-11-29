@@ -4,8 +4,7 @@ import cv2
 from gestureInterface import GestureInterface
 from common.fireTV import FTVController
 
-
-# for cam era input
+# for camera input
 cap = cv2.VideoCapture(0)
 # for FireTV Connection
 fc = FTVController(ip="192.168.0.20")
