@@ -78,8 +78,9 @@ class gestureDetector:
         thumb_tip = np.array([self.hand_node[4].x, self.hand_node[4].y, self.hand_node[4].z])
         index_finger_mcp = np.array([self.hand_node[5].x, self.hand_node[5].y, self.hand_node[5].z])
         middle_finger_pip = np.array([self.hand_node[10].x, self.hand_node[10].y, self.hand_node[10].z])
-        ring_finger_pip = np.array([self.hand_node[14].x, self.hand_node[14].y, self.hand_node[14].z])
         middle_finger_tip = np.array([self.hand_node[12].x, self.hand_node[12].y, self.hand_node[12].z])
+        ring_finger_pip = np.array([self.hand_node[14].x, self.hand_node[14].y, self.hand_node[14].z])
+
         
         dist4_5 = np.linalg.norm(thumb_tip-index_finger_mcp, ord=2)
         dist4_10 = np.linalg.norm(thumb_tip-middle_finger_pip, ord=2)
