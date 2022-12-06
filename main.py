@@ -2,16 +2,16 @@ import sys
 import threading
 
 import cv2
-from gestureInterface import GestureInterface
+from util.gestureInterface import GestureInterface
 from util.fireTV import FTVController
 
-# class FTVController:
-#     def __init__(self, ip):
-#         self.ip = ip
-#     def connect(self):
-#         return 0
-#     def command(self, command):
-#         print(command)
+class FTVController:
+    def __init__(self, ip):
+        self.ip = ip
+    def connect(self):
+        return 0
+    def command(self, command):
+        print(command)
 
 if __name__=="__main__":
     # for camera input
@@ -42,7 +42,10 @@ if __name__=="__main__":
                         "rhand":{"grub":False, "dire":"Left"}},
                     "Home":{
                         "lhand":{"grub":False, "dire":"Up"},
-                        "rhand":{"grub":False, "dire":"Up"}}
+                        "rhand":{"grub":False, "dire":"Up"}},
+                    "StartStop":{
+                        "lhand":{"grub":True, "dire":None},
+                        "rhand":{"grub":None, "dire":None}}
                     }
     exe_commands = []
     gi = GestureInterface(cap, command_map)
@@ -55,5 +58,6 @@ if __name__=="__main__":
         # send command
         while exe_commands:
             command = exe_commands.pop(0)
+            # for not to delay capturing when command send
             exe_thread = threading.Thread(target=target.command, args=(command,), daemon=True)
             exe_thread.start()
