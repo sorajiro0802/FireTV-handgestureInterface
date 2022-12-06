@@ -1,4 +1,5 @@
 import numpy as np
+from util.counter import Counter
 
 class gestureDetector:
     def __init__(self, result, required_frame):
@@ -10,7 +11,7 @@ class gestureDetector:
         self.c1 = Counter()
         self.dires = []
         self.direction = None
-        
+
     def detect(self, erapsed_time):
         # 8：人差し指の先端
         finger_direc = self.getPointsDirection(8, erapsed_time)
@@ -95,15 +96,6 @@ class gestureDetector:
         self.result = result
         self.hand_node = self.result.landmark
 
-class Counter:
-    def __init__(self):
-        self.cnt = 0
-    def up(self):
-        self.cnt += 1
-    def down(self):
-        self.cnt -= 1
-    def clear(self):
-        self.cnt = 0
 
 if __name__=='__main__':
     print(f"hello {__name__}")
