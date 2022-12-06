@@ -73,7 +73,7 @@ class GestureInterface:
                     grub, dire = self.detectorR.detect(erapsed_time)
                     command_flag["rhand"]["grub"] = grub
                     command_flag["rhand"]["dire"] = dire
-                print(f"{command_flag=}\t")
+                print(f"{command_flag=}")
                 # check whether command_flag matchs command_map
                 for cmk in self.command_map.keys():
                     if command_flag == self.command_map.get(cmk):
