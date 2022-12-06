@@ -74,11 +74,11 @@ class GestureInterface:
                     command_flag["rhand"]["grub"] = grub
                     command_flag["rhand"]["dire"] = dire
                 print(f"{command_flag=}\t")
+                # check whether command_flag matchs command_map
                 for cmk in self.command_map.keys():
                     if command_flag == self.command_map.get(cmk):
                         print(f"{cmk=}")
                         return cmk, True # this `True` let camera capture continue
-                        # send command
                 
                 # reset command flag
                 command_flag = command_flag_tmp
