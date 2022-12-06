@@ -77,7 +77,7 @@ class GestureInterface:
                 for cmk in self.command_map.keys():
                     if command_flag == self.command_map.get(cmk):
                         print(f"{cmk=}")
-                        return cmk, True
+                        return cmk, True # this `True` let camera capture continue
                         # send command
                 
                 # reset command flag
