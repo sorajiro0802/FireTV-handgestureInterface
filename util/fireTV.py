@@ -1,7 +1,7 @@
 import subprocess
 
 class FTVController:
-    def __init__(self, ip, port=5555):
+    def __init__(self, ip, port=5555): # default port is 5555. but this can change in 5555~5585 at adb setting
         self.ip = ip
         self.port = port
         # adb keyevent num is below
