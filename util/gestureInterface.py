@@ -25,9 +25,9 @@ class GestureInterface:
             while self.cap.isOpened():
                 # for FPS
                 tick = cv2.getTickCount()
-                command_flag = {"lhand":{"grub": None, "dire": None},
+                gesture_flag = {"lhand":{"grub": None, "dire": None},
                                 "rhand":{"grub": None, "dire": None}}
-                command_flag_tmp = command_flag.copy()
+                gesture_flag_tmp = gesture_flag.copy()
                 success, image = self.cap.read()
                 if not success:
                     print("Ignoring empty camera frame.")
@@ -58,8 +58,8 @@ class GestureInterface:
                     # detect gesture of LeftHand
                     self.detectorL.updateResults(results.left_hand_landmarks)
                     grub, dire = self.detectorL.detect(erapsed_time)
-                    command_flag["lhand"]["grub"] = grub
-                    command_flag["lhand"]["dire"] = dire
+                    gesture_flag["lhand"]["grub"] = grub
+                    gesture_flag["lhand"]["dire"] = dire
 
                 if results.right_hand_landmarks:
                     # draw RightHand landmarks
@@ -71,17 +71,17 @@ class GestureInterface:
                     # detect gesture of RightHand
                     self.detectorR.updateResults(results.right_hand_landmarks)
                     grub, dire = self.detectorR.detect(erapsed_time)
-                    command_flag["rhand"]["grub"] = grub
-                    command_flag["rhand"]["dire"] = dire
-                print(f"{command_flag=}")
-                # check whether command_flag matchs command_map
+                    gesture_flag["rhand"]["grub"] = grub
+                    gesture_flag["rhand"]["dire"] = dire
+                print(f"{gesture_flag=}")
+                # check whether gesture_flag matchs command_map
                 for cmk in self.command_map.keys():
-                    if command_flag == self.command_map.get(cmk):
-                        print(f"{cmk=}")
+                    if gesture_flag == self.command_map.get(cmk):
+                        # print(f"{cmk=}")
                         return cmk, True # this `True` let camera capture continue
                 
                 # reset command flag
-                command_flag = command_flag_tmp
+                gesture_flag = gesture_flag_tmp
                 # Flip the image horizontally for a selfie-view display.
                 # cv2.imshow('FireTV HandGesture Controller', cv2.flip(image, 1))
                 # not flip the image
