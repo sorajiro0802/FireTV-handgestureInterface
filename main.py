@@ -17,7 +17,7 @@ if __name__=="__main__":
     # for camera input
     cap = cv2.VideoCapture(0)
     # for FireTV Connection
-    target = FTVController(ip="172.20.10.13")
+    target = FTVController(ip="192.168.0.20")
     # stop if cann not connect
     if not target.connect()==0:
         sys.exit()
