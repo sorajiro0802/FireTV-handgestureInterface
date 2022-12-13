@@ -14,6 +14,9 @@ class GestureInterface:
         min_detection_frame = 3
         self.detectorR = gestureDetector(result=None, required_frame=min_detection_frame)
         self.detectorL = gestureDetector(result=None, required_frame=min_detection_frame)
+        
+        self.pre_gesture_flag = {"lhand":{"grub": None, "dire": None},
+                                 "rhand":{"grub": None, "dire": None}}
     
     def __del__(self):
         self.cap_release()
@@ -73,14 +76,17 @@ class GestureInterface:
                     grub, dire = self.detectorR.detect(erapsed_time)
                     gesture_flag["rhand"]["grub"] = grub
                     gesture_flag["rhand"]["dire"] = dire
-                print(f"{gesture_flag=}")
+
                 # check whether gesture_flag matchs command_map
                 for cmk in self.command_map.keys():
-                    if gesture_flag == self.command_map.get(cmk):
-                        # print(f"{cmk=}")
-                        return cmk, True # this `True` let camera capture continue
-                
-                # reset command flag
+                    if (gesture_flag != self.pre_gesture_flag) & (self.pre_gesture_flag != dict(self.command_map[cmk])):
+                        if self.command_map[cmk] == gesture_flag:
+                            self.pre_gesture_flag = gesture_flag
+                            gesture_flag = gesture_flag_tmp
+                            return cmk, True
+                        
+                self.pre_gesture_flag = gesture_flag
+                # reset gesture flag
                 gesture_flag = gesture_flag_tmp
                 # Flip the image horizontally for a selfie-view display.
                 # cv2.imshow('FireTV HandGesture Controller', cv2.flip(image, 1))
