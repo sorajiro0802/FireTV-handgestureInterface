@@ -5,13 +5,6 @@ import cv2
 from util.gestureInterface import GestureInterface
 from util.fireTV import FTVController
 
-class FTVController:
-    def __init__(self, ip):
-        self.ip = ip
-    def connect(self):
-        return 0
-    def command(self, command):
-        print(command)
 
 if __name__=="__main__":
     # for camera input
