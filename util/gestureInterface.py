@@ -23,8 +23,8 @@ class GestureInterface:
 
     def Interface(self):
         with self.mp_holistic.Holistic(
-            min_detection_confidence=0.5,
-            min_tracking_confidence=0.5) as hands:
+            min_detection_confidence=0.1,
+            min_tracking_confidence=0.1) as hands:
             while self.cap.isOpened():
                 # for FPS
                 tick = cv2.getTickCount()
@@ -83,6 +83,7 @@ class GestureInterface:
                         if self.command_map[cmk] == gesture_flag:
                             self.pre_gesture_flag = gesture_flag
                             gesture_flag = gesture_flag_tmp
+                            print(f"{cmk=}")
                             return cmk, True
                         
                 self.pre_gesture_flag = gesture_flag
