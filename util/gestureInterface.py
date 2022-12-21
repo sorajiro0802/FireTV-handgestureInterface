@@ -49,7 +49,7 @@ class GestureInterface:
                 # display FPS
                 fps = cv2.getTickFrequency() / (cv2.getTickCount() - tick)
                 cv2.putText(image, f"{floor(fps)}fps", (60, 60), cv2.FONT_HERSHEY_PLAIN, 2, (0, 255, 0), 2, cv2.LINE_AA)
-                erapsed_time = (cv2.getTickCount() - tick) / cv2.getTickFrequency()
+                elapsed_time = (cv2.getTickCount() - tick) / cv2.getTickFrequency()
 
                 if results.left_hand_landmarks:
                     # draw LeftHand landmarks
@@ -60,7 +60,7 @@ class GestureInterface:
                                                 self.mp_drawing_styles.get_default_hand_connections_style())
                     # detect gesture of LeftHand
                     self.detectorL.updateResults(results.left_hand_landmarks)
-                    grub, dire = self.detectorL.detect(erapsed_time)
+                    grub, dire = self.detectorL.detect(elapsed_time)
                     gesture_flag["lhand"]["grub"] = grub
                     gesture_flag["lhand"]["dire"] = dire
 
@@ -73,7 +73,7 @@ class GestureInterface:
                                                 self.mp_drawing_styles.get_default_hand_connections_style())
                     # detect gesture of RightHand
                     self.detectorR.updateResults(results.right_hand_landmarks)
-                    grub, dire = self.detectorR.detect(erapsed_time)
+                    grub, dire = self.detectorR.detect(elapsed_time)
                     gesture_flag["rhand"]["grub"] = grub
                     gesture_flag["rhand"]["dire"] = dire
 

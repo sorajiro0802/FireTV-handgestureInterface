@@ -12,7 +12,7 @@ class FTVController:
                                     'Select': 66,
                                     'Back': 4,
                                     'Home': 3,
-                                    'Menue': 1,
+                                    'Menu': 1,
                                     'StartStop': 85}
         
     def __del__(self):

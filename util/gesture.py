@@ -12,13 +12,13 @@ class gestureDetector:
         self.dires = []
         self.direction = None
 
-    def detect(self, erapsed_time):
+    def detect(self, elapsed_time):
         # 8：人差し指の先端
-        finger_direc = self.getPointsDirection(8, erapsed_time)
+        finger_direc = self.getPointsDirection(8, elapsed_time)
         isGrub = self.getGrub(0.1)
         return isGrub, finger_direc
     
-    def getPointsDirection(self, point_num, erapsed_time):
+    def getPointsDirection(self, point_num, elapsed_time):
         # 1 count ≈ 0.035 sec
         if self.c1.cnt > 0:
             self.c1.up()
@@ -71,8 +71,8 @@ class gestureDetector:
             self.c1.clear()
             
             # Judging by threshold of acceleration
-            ac = abs_P / erapsed_time**2
-            if ac > 40 and self.direction:
+            acc = abs_P / elapsed_time**2
+            if acc > 40 and self.direction:
                 return self.direction
             
     def getGrub(self, dist):
