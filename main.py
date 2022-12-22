@@ -42,10 +42,10 @@ if __name__=="__main__":
     #                     "lhand":{"grub":True, "dire":None},
     #                     "rhand":{"grub":None, "dire":None}}
     #                 }
-    command_map = { "RGrub":{
+    command_map = { "On":{
                         "lhand":{"grub":None, "dire":None},
                         "rhand":{"grub":True, "dire":None}},
-                    "LGrub":{
+                    "Off":{
                         "lhand":{"grub":True, "dire":None},
                         "rhand":{"grub":None, "dire":None}}
     }

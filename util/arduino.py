@@ -4,8 +4,8 @@ class ArduinoController:
     def __init__(self, port):
         self.port = port
         self.ser = serial.Serial(self.port, 9600)
-        self.gesture_order_map = {  'RGrub': "1",
-                                    'LGrub': "0"}
+        self.gesture_order_map = {  'On': "1",
+                                    'Off': "0"}
 
     
     def connect(self):
