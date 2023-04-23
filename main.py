@@ -11,7 +11,7 @@ if __name__=="__main__":
     cap = cv2.VideoCapture(0)
     # for FireTV Connection
     # target = FTVController(ip="192.168.0.20")
-    target = ArduinoController(port="/dev/cu.usbmodem101")
+    target = ArduinoController(port="/dev/cu.usbmodem1201")
     
     # stop if cann not connect
     if target.connect() != 0:
