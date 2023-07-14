@@ -8,7 +8,7 @@ from util.arduino import ArduinoController
 
 if __name__=="__main__":
     # for camera input
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture(1)
     # for FireTV Connection
     # target = FTVController(ip="192.168.0.20")
     target = ArduinoController(port="/dev/cu.usbmodem1201")
